@@ -9,7 +9,6 @@ SETUP_FLAG = os.path.join(os.path.expanduser('~'), '.local', 'share', 'funtastic
 
 DEFAULT_CONFIG = {
     "startup": False,
-    "display_mode": "window",  # "window" or "notification"
     "weekly_download": True
 }
 
@@ -42,7 +41,7 @@ def update_autostart(enable):
         desktop_entry ="""[Desktop Entry]
 Type=Application
 Name=Funtastic !
-Exec=funtastic
+Exec=flatpak run io.github.comicalsoftwares.funtastic
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true

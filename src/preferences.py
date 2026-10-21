@@ -21,15 +21,6 @@ class FuntasticPreferencesWindow(Adw.PreferencesWindow):
         self.startup_row.connect("notify::active", self.on_startup_toggled)
         general_group.add(self.startup_row)
 
-        self.mode_row = Adw.ComboRow(
-            title="Presentation Style",
-            subtitle="Choose how facts appear on startup",
-            model=Gtk.StringList.new(["Full App Window", "Desktop Notification"])
-        )
-        self.mode_row.set_selected(1 if self.config.get("display_mode") == "notification" else 0)
-        self.mode_row.connect("notify::selected", self.on_mode_changed)
-        general_group.add(self.mode_row)
-
         storage_group = Adw.PreferencesGroup(
             title="Storage and network",
             description="Manage data usage and caching"

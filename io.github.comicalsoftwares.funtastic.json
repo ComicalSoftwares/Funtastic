@@ -1,7 +1,7 @@
 {
     "id" : "io.github.comicalsoftwares.funtastic",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
+    "runtime-version" : "50",
     "sdk" : "org.gnome.Sdk",
     "command" : "funtastic",
     "finish-args" : [
@@ -11,7 +11,8 @@
         "--device=dri",
         "--socket=wayland",
         "--filesystem=xdg-config/funtastic:create",
-	"--filesystem=xdg-data/funtastic:create"
+	"--filesystem=xdg-data/funtastic:create",
+	"--filesystem=xdg-config/autostart:create"
     ],
     "cleanup" : [
         "/include",
@@ -32,7 +33,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/rocky/Documents"
+                    "url" : "https://github.com/ComicalSoftwares/Funtastic.git"
                 }
             ]
         }

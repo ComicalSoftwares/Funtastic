@@ -56,14 +56,7 @@ class FuntasticApplication(Adw.Application):
                 return
             else:
                 print("[Funtastic Debug] Setup skipped (Config found).")
-
-        config = load_config()
-        if config.get("display_mode") == "notification":
-            notification = Gio.Notification.new("Funtastic! Daily Fact")
-            notification.set_body(win.current_fact)
-            self.send_notification("daily-fact", notification)
-        else:
-            win.present()
+                win.present()
 
     def on_about_action(self, *args):
         about = Adw.AboutDialog(

@@ -13,8 +13,8 @@ Funtastic serves one simple purpose: **provide fantastic fun facts**
 ## Screenshots and demo
 <img width="850" height="650" alt="image" src="https://github.com/user-attachments/assets/2d35e77a-e4a9-4cde-87fe-4ae3520dac10" />
 <img width="850" height="650" alt="image" src="https://github.com/user-attachments/assets/d5e76ccc-c5d4-46b2-b3e4-6e9efd10d7eb" />
-<img width="690" height="626" alt="image" src="https://github.com/user-attachments/assets/4248aebe-ec00-4c4f-a17b-b99253191bff" />
-<img width="690" height="626" alt="image" src="https://github.com/user-attachments/assets/84c2bd28-1abe-4905-ad94-b84905e98dba" />
+<img width="690" height="626" alt="image" src="https://github.com/user-attachments/assets/d26595ff-2ac1-405f-a022-51bf66d66831" />
+<img width="690" height="626" alt="image" src="https://github.com/user-attachments/assets/2a5ac6f5-ed03-482d-9f06-bdd58788f5a5" />
 
 ## Features
 - Retrieve fun facts from Wikipedia
