@@ -20,6 +20,6 @@ Funtastic serves one simple purpose: **provide fantastic fun facts**
 - Retrieve fun facts from Wikipedia
 - Simple and beatiful Adwaita/GTK4 UI
 - Ability to cache future facts for the next 7 days
-- Show today's fun fact on system startup by either sending a notification or by opening the full app automatically
+- Show today's fun fact on system startup when user sets the concerned toggle to `True` (ON)
 ## License
 This project is licensed under the MIT license
