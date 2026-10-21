@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="FuntasticWindow" parent="AdwApplicationWindow">
+    <property name="title" translatable="no">Funtastic !</property>
+    <property name="default-width">800</property>
+    <property name="default-height">600</property>
+    <property name="resizable">False</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="primary">True</property>
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Main Menu</property>
+                <property name="menu-model">primary_menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+  <object class="GtkCenterBox" id="box">
+    <property name="orientation">vertical</property>
+    <property name="halign">center</property>
+    <child type="center">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="halign">center</property>
+        <property name="spacing">18</property>
+        <child>
+          <object class="GtkLabel" id="title_label">
+            <property name="label" translatable="yes">Today's fun-tastic fact is..</property>
+            <style>
+              <class name="title-1"/>
+            </style>
+          </object>
+        </child>
+        <child>
+      <object class="GtkFrame">
+        <style>
+          <class name="card"/>
+        </style>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="margin-top">18</property>
+            <property name="margin-bottom">18</property>
+            <property name="margin-start">24</property>
+            <property name="margin-end">24</property>
+            <child>
+              <object class="GtkLabel" id="fact_label">
+                <property name="use-markup">True</property>
+                <property name="label" translatable="yes">&lt;i&gt;“A wise man once said absolutely nothing.”&lt;/i&gt;</property>
+                <property name="wrap">True</property>
+                <property name="max-width-chars">40</property>
+                <style>
+                  <class name="body"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+
+  </object>
+</child>
+    <child type="end">
+      <object class="GtkLabel" id="tomorrow">
+        <property name="label">Come back tomorrow for another fun-fact !</property>
+        <property name="halign">center</property>
+        <property name="margin-bottom">24</property>
+        <style>
+          <class name="dim-label"/>
+          <class name="caption"/>
+        </style>
+      </object>
+    </child>
+  </object>
+</property>
+      </object>
+    </property>
+  </template>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="action">app.shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About Funtastic</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

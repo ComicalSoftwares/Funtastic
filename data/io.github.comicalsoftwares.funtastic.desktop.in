@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Funtastic !
+Exec=funtastic
+Icon=io.github.comicalsoftwares.funtastic
+Terminal=false
+Type=Application
+Categories=Utility;Educational;
+Keywords=GTK;Fun facts;fun;fact;
+StartupNotify=true
+DBusActivatable=true

@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/io.github.comicalsoftwares.funtastic.desktop.in
+data/io.github.comicalsoftwares.funtastic.metainfo.xml.in
+data/io.github.comicalsoftwares.funtastic.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

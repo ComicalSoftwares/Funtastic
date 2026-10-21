@@ -1,0 +1,103 @@
+from gi.repository import Adw, Gtk
+from .config import load_config, save_config, DEFAULT_CONFIG
+import os
+
+class FuntasticPreferencesWindow(Adw.PreferencesWindow):
+    __gtype_name__ = 'FuntasticPreferencesWindow'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.set_title("Preferences")
+        self.config = load_config()
+
+        page = Adw.PreferencesPage()
+        self.add(page)
+
+        general_group = Adw.PreferencesGroup(title="Automatic Startup")
+        page.add(general_group)
+
+        self.startup_row = Adw.SwitchRow(title="Start on System Startup")
+        self.startup_row.set_active(self.config.get("startup", False))
+        self.startup_row.connect("notify::active", self.on_startup_toggled)
+        general_group.add(self.startup_row)
+
+        self.mode_row = Adw.ComboRow(
+            title="Presentation Style",
+            subtitle="Choose how facts appear on startup",
+            model=Gtk.StringList.new(["Full App Window", "Desktop Notification"])
+        )
+        self.mode_row.set_selected(1 if self.config.get("display_mode") == "notification" else 0)
+        self.mode_row.connect("notify::selected", self.on_mode_changed)
+        general_group.add(self.mode_row)
+
+        storage_group = Adw.PreferencesGroup(
+            title="Storage and network",
+            description="Manage data usage and caching"
+        )
+        page.add(storage_group)
+
+        self.weekly_row = Adw.SwitchRow(
+            title="Enable Weekly Fact Caching",
+            subtitle="Recommended to keep ON, it keeps a 7-day locally cached list of facts that gets used for the entire week. It's better for saving on internet and resources."
+        )
+        self.weekly_row.set_active(self.config.get("weekly_download", True))
+        self.weekly_row.connect("notify::active", self.on_weekly_toggled)
+        storage_group.add(self.weekly_row)
+
+        clear_cache_row = Adw.ActionRow(
+            title="Clear Local Cache",
+            subtitle="Delete cached history and fetch fresh facts"
+        )
+        clear_button = Gtk.Button(label="Clear")
+        clear_button.set_valign(Gtk.Align.CENTER)
+        clear_button.add_css_class("destructive-action")
+        clear_button.connect("clicked", self.on_clear_cache_clicked)
+        clear_cache_row.add_suffix(clear_button)
+        storage_group.add(clear_cache_row)
+
+        reset_group = Adw.PreferencesGroup(title="Reset")
+        page.add(reset_group)
+
+        reset_row = Adw.ActionRow(
+            title="Restore Defaults",
+            subtitle="Reset all settings and preferences back to default values"
+        )
+        reset_button = Gtk.Button(label="Reset Preferences")
+        reset_button.set_valign(Gtk.Align.CENTER)
+        reset_button.add_css_class("destructive-action")
+        reset_button.connect("clicked", self.on_reset_clicked)
+        reset_row.add_suffix(reset_button)
+        reset_group.add(reset_row)
+
+    def on_startup_toggled(self, row, *args):
+        self.config["startup"] = row.get_active()
+        save_config(self.config)
+
+    def on_mode_changed(self, row, *args):
+        self.config["display_mode"] = "notification" if row.get_selected() == 1 else "window"
+        save_config(self.config)
+
+    def on_weekly_toggled(self, row, *args):
+        self.config["weekly_download"] = row.get_active()
+        save_config(self.config)
+
+    def on_clear_cache_clicked(self, button):
+        cache_file = os.path.join(
+            os.path.expanduser('~'), '.local', 'share', 'funtastic', 'cache.json'
+        )
+        if os.path.exists(cache_file):
+            try:
+                os.remove(cache_file)
+                button.set_label("Cleared!")
+                button.set_sensitive(False)
+            except Exception as e:
+                print(f"Failed to clear cache: {e}")
+
+    def on_reset_clicked(self, button):
+        save_config(DEFAULT_CONFIG.copy())
+        self.config = load_config()
+        self.startup_row.set_active(self.config["startup"])
+        self.mode_row.set_selected(0)
+        self.weekly_row.set_active(self.config["weekly_download"])
+        button.set_label("Reset Done!")
+        button.set_sensitive(False)
