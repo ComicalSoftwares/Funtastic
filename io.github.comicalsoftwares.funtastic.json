@@ -1,7 +1,7 @@
 {
     "id" : "io.github.comicalsoftwares.funtastic",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "50",
+    "runtime-version" : "51",
     "sdk" : "org.gnome.Sdk",
     "command" : "funtastic",
     "finish-args" : [
@@ -31,7 +31,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/ComicalSoftwares/Funtastic.git",
-                    "branch": "main"
+                    "commit": "526fc3c3e945ca710f22bb5412633e7562fb4ff7"
                 }
             ]
         }
