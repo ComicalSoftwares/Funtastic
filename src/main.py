@@ -63,7 +63,7 @@ class FuntasticApplication(Adw.Application):
             application_name='Funtastic !',
             application_icon='io.github.comicalsoftwares.funtastic',
             developer_name='Anir El Haddaj',
-            version='1.0-alpha',
+            version='1.0.0',
             translator_credits=_('translator-credits'),
             developers=['Anir El Haddaj'],
             copyright='''MIT License
