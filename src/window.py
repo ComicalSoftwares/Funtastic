@@ -57,7 +57,7 @@ class FuntasticWindow(Adw.ApplicationWindow):
         pack_into_header(self)
 
     def get_formatted_fact_with_source(self):
-        return f"{self.current_fact}\n\nSource: Wikipedia 'On This Day' API (https://en.wikipedia.org)"
+        return f"{self.current_fact}\n\nSource: Wikipedia (https://en.wikipedia.org)"
 
     def copy_to_clipboard(self):
         clipboard = self.get_display().get_clipboard()

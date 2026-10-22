@@ -16,29 +16,20 @@ class FuntasticPreferencesWindow(Adw.PreferencesWindow):
         general_group = Adw.PreferencesGroup(title="Automatic Startup")
         page.add(general_group)
 
-        self.startup_row = Adw.SwitchRow(title="Start on System Startup")
+        self.startup_row = Adw.SwitchRow(title="Start Funtastic once you log in")
         self.startup_row.set_active(self.config.get("startup", False))
         self.startup_row.connect("notify::active", self.on_startup_toggled)
         general_group.add(self.startup_row)
 
-        storage_group = Adw.PreferencesGroup(
-            title="Storage and network",
-            description="Manage data usage and caching"
-        )
+        storage_group = Adw.PreferencesGroup(title="Storage and network", description="Manage data usage and caching")
         page.add(storage_group)
 
-        self.weekly_row = Adw.SwitchRow(
-            title="Enable Weekly Fact Caching",
-            subtitle="Recommended to keep ON, it keeps a 7-day locally cached list of facts that gets used for the entire week. It's better for saving on internet and resources."
-        )
+        self.weekly_row = Adw.SwitchRow(title="Enable Weekly Fact Caching", subtitle="Recommended to keep ON, it keeps a 7-day locally cached list of facts that gets used for the entire week. It's better for saving on internet and resources.")
         self.weekly_row.set_active(self.config.get("weekly_download", True))
         self.weekly_row.connect("notify::active", self.on_weekly_toggled)
         storage_group.add(self.weekly_row)
 
-        clear_cache_row = Adw.ActionRow(
-            title="Clear Local Cache",
-            subtitle="Delete cached history and fetch fresh facts"
-        )
+        clear_cache_row = Adw.ActionRow(title="Clear Local Cache", subtitle="Delete cached history and fetch fresh facts")
         clear_button = Gtk.Button(label="Clear")
         clear_button.set_valign(Gtk.Align.CENTER)
         clear_button.add_css_class("destructive-action")
@@ -49,10 +40,7 @@ class FuntasticPreferencesWindow(Adw.PreferencesWindow):
         reset_group = Adw.PreferencesGroup(title="Reset")
         page.add(reset_group)
 
-        reset_row = Adw.ActionRow(
-            title="Restore Defaults",
-            subtitle="Reset all settings and preferences back to default values"
-        )
+        reset_row = Adw.ActionRow(title="Restore Defaults", subtitle="Reset all settings and preferences back to default values")
         reset_button = Gtk.Button(label="Reset Preferences")
         reset_button.set_valign(Gtk.Align.CENTER)
         reset_button.add_css_class("destructive-action")

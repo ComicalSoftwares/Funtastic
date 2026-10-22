@@ -23,20 +23,16 @@ class SetupWindow(Adw.Window):
         box.set_margin_start(20)
         box.set_margin_end(20)
 
-        status_page = Adw.StatusPage(
-            title="Welcome to Funtastic!", description="Get fun-facts every single day from Wikipedia.", icon_name="io.github.comicalsoftwares.funtastic")
+        status_page = Adw.StatusPage(title="Welcome to Funtastic!", description="Get fun-facts every single day.", icon_name="io.github.comicalsoftwares.funtastic")
         box.append(status_page)
 
-        group = Adw.PreferencesGroup(title="Initial Setup")
+        group = Adw.PreferencesGroup(title="Would you like to have Funtastic run at startup ?")
         box.append(group)
 
-        self.startup_row = Adw.SwitchRow(title="Start on System Startup")
+        self.startup_row = Adw.SwitchRow(title="Start Funtastic at system startup", subtitle="If toggled ON, Funtastic will start automatically everytime you log in.")
         group.add(self.startup_row)
 
-        self.mode_row = Adw.ComboRow(title="Display Mode", model=Gtk.StringList.new(["Full App Window", "Desktop Notification"]))
-        group.add(self.mode_row)
-
-        start_button = Gtk.Button(label="Get Started")
+        start_button = Gtk.Button(label="Let's Go !")
         start_button.add_css_class("suggested-action")
         start_button.add_css_class("pill")
         start_button.set_margin_top(10)
@@ -49,16 +45,4 @@ class SetupWindow(Adw.Window):
     def on_start_clicked(self, button):
         config = load_config()
         config["startup"] = self.startup_row.get_active()
-        config["display_mode"] = "notification" if self.mode_row.get_selected() == 1 else "window"
         save_config(config)
-
-        setup_flag = os.path.join(
-            os.path.expanduser('~'), '.local', 'share', 'funtastic', '.setup_done'
-        )
-        os.makedirs(os.path.dirname(setup_flag), exist_ok=True)
-        with open(setup_flag, 'w') as f:
-            f.write("done")
-
-        if self.on_complete_callback:
-            self.on_complete_callback()
-        self.close()
