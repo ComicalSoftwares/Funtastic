@@ -24,7 +24,7 @@ appstreamcli = find_program('appstreamcli', required: false, disabler: true)
 test('Validate appstream file', appstreamcli,
      args: ['validate', '--no-net', '--explain', appstream_file])
 
-icon_sizes = ['16x16', '32x32', '64x64', '128x128', '256x256', '512x512', '1024x1024']
+icon_sizes = ['16x16', '32x32', '64x64', '128x128', '256x256', '512x512']
 
 foreach size : icon_sizes
   install_data(
