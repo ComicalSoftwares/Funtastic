@@ -11,8 +11,9 @@ from gettext import gettext as _
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk, Gio, Adw
+from gi.repository import Gtk, Gio, Adw, GLib
 from .window import FuntasticWindow
+from .preferences import FuntasticPreferencesWindow, load_config
 
 CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.config', 'funtastic')
 CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
@@ -23,6 +24,7 @@ class FuntasticApplication(Adw.Application):
         super().__init__(application_id='io.github.comicalsoftwares.funtastic',
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
                          resource_base_path='/io/github/comicalsoftwares/funtastic')
+        self.config = load_config()
         self.create_action('quit', lambda *_: self.quit(), ['<control>q'])
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action)
@@ -47,7 +49,7 @@ class FuntasticApplication(Adw.Application):
         about.present(self.props.active_window)
 
     def on_preferences_action(self, widget, _):
-        from .preferences import FuntasticPreferencesWindow
+        self.config = load_config()
         prefs_win = FuntasticPreferencesWindow(transient_for=self.props.active_window)
         prefs_win.present()
 
@@ -59,7 +61,7 @@ class FuntasticApplication(Adw.Application):
             self.set_accels_for_action(f"app.{name}", shortcuts)
 
     def get_cache_path(self):
-        app_dir = os.path.join(os.path.expanduser('~'), '.local', 'share', 'funtastic')
+        app_dir = os.path.join(GLib.get_user_data_dir(), 'funtastic')
         os.makedirs(app_dir, exist_ok=True)
         return os.path.join(app_dir, 'cache.json')
 
@@ -85,6 +87,11 @@ class FuntasticApplication(Adw.Application):
         return "Wikipedia's servers are down."
 
     def get_daily_fact(self):
+        self.config = load_config()
+
+        if not self.config.get("weekly_download", True):
+            return self.fetch_wikipedia_fact()
+
         cache_file = self.get_cache_path()
         today_str = str(date.today())
         fact_text = None

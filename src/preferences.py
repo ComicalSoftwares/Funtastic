@@ -1,10 +1,10 @@
-from gi.repository import Adw, Gtk
+from gi.repository import Adw, Gtk, GLib
 import json
 import os
 
-CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.config', 'funtastic')
+CONFIG_DIR = os.path.join(GLib.get_user_config_dir(), 'funtastic')
 CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
-AUTOSTART_DIR = os.path.join(os.path.expanduser('~'), '.config', 'autostart')
+AUTOSTART_DIR = os.path.join(GLib.get_user_config_dir(), 'autostart')
 AUTOSTART_FILE = os.path.join(AUTOSTART_DIR, 'io.github.comicalsoftwares.funtastic.desktop')
 
 DEFAULT_CONFIG = {
