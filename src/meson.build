@@ -30,9 +30,7 @@ funtastic_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'setup.py',
-  'preferences.py',
-  'config.py'
+  'preferences.py'
 ]
 
 install_data(funtastic_sources, install_dir: moduledir)

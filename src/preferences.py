@@ -1,6 +1,46 @@
 from gi.repository import Adw, Gtk
-from .config import load_config, save_config, DEFAULT_CONFIG
+import json
 import os
+
+CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.config', 'funtastic')
+CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
+AUTOSTART_DIR = os.path.join(os.path.expanduser('~'), '.config', 'autostart')
+AUTOSTART_FILE = os.path.join(AUTOSTART_DIR, 'io.github.comicalsoftwares.funtastic.desktop')
+
+DEFAULT_CONFIG = {
+    "startup": False,
+    "weekly_download": True
+}
+
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                return {**DEFAULT_CONFIG, **json.load(f)}
+        except Exception:
+            pass
+    return DEFAULT_CONFIG.copy()
+
+def save_config(config):
+    os.makedirs(CONFIG_DIR, exist_ok=True)
+    with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
+        json.dump(config, f, indent=2)
+
+    os.makedirs(AUTOSTART_DIR, exist_ok=True)
+    if config.get("startup", False):
+        desktop_entry = """[Desktop Entry]
+Type=Application
+Name=Funtastic !
+Exec=flatpak run io.github.comicalsoftwares.funtastic
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+"""
+        with open(AUTOSTART_FILE, 'w', encoding='utf-8') as f:
+            f.write(desktop_entry)
+    else:
+        if os.path.exists(AUTOSTART_FILE):
+            os.remove(AUTOSTART_FILE)
 
 class FuntasticPreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = 'FuntasticPreferencesWindow'
@@ -24,7 +64,7 @@ class FuntasticPreferencesWindow(Adw.PreferencesWindow):
         storage_group = Adw.PreferencesGroup(title="Storage and network", description="Manage data usage and caching")
         page.add(storage_group)
 
-        self.weekly_row = Adw.SwitchRow(title="Enable Weekly Fact Caching", subtitle="Recommended to keep ON, it keeps a 7-day locally cached list of facts that gets used for the entire week. It's better for saving on internet and resources.")
+        self.weekly_row = Adw.SwitchRow(title="Enable Weekly Fact Caching", subtitle="Recommended to keep ON.")
         self.weekly_row.set_active(self.config.get("weekly_download", True))
         self.weekly_row.connect("notify::active", self.on_weekly_toggled)
         storage_group.add(self.weekly_row)
@@ -52,18 +92,12 @@ class FuntasticPreferencesWindow(Adw.PreferencesWindow):
         self.config["startup"] = row.get_active()
         save_config(self.config)
 
-    def on_mode_changed(self, row, *args):
-        self.config["display_mode"] = "notification" if row.get_selected() == 1 else "window"
-        save_config(self.config)
-
     def on_weekly_toggled(self, row, *args):
         self.config["weekly_download"] = row.get_active()
         save_config(self.config)
 
     def on_clear_cache_clicked(self, button):
-        cache_file = os.path.join(
-            os.path.expanduser('~'), '.local', 'share', 'funtastic', 'cache.json'
-        )
+        cache_file = os.path.join(os.path.expanduser('~'), '.local', 'share', 'funtastic', 'cache.json')
         if os.path.exists(cache_file):
             try:
                 os.remove(cache_file)

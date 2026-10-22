@@ -13,7 +13,9 @@ gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio, Adw
 from .window import FuntasticWindow
-from .config import load_config, CONFIG_FILE
+
+CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.config', 'funtastic')
+CONFIG_FILE = os.path.join(CONFIG_DIR, 'config.json')
 
 
 class FuntasticApplication(Adw.Application):
@@ -30,22 +32,7 @@ class FuntasticApplication(Adw.Application):
         if not win:
             fact = self.get_daily_fact()
             win = FuntasticWindow(application=self, initial_fact=fact)
-
-            from .config import load_config
-            config = load_config()
-            if config.get("setup_completed", False):
-                print("[Funtastic Debug] Triggering Setup Window...")
-                from .setup import SetupWindow
-                setup_dialog = SetupWindow(
-                    on_complete_callback=lambda: print("[Funtastic Debug] Setup Completed & Saved!"),
-                    transient_for=win
-                )
-                win.present()
-                setup_dialog.present()
-                return
-            else:
-                print("[Funtastic Debug] Setup skipped (Already completed).")
-                win.present()
+            win.present()
 
     def on_about_action(self, *args):
         about = Adw.AboutDialog(
@@ -55,27 +42,7 @@ class FuntasticApplication(Adw.Application):
             version='1.0.0',
             translator_credits=_('translator-credits'),
             developers=['Anir El Haddaj'],
-            copyright='''MIT License
-
-Copyright (c) 2026 Anir El Haddaj (ComicalSoftwares)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.'''
+            copyright='MIT License\n\nCopyright (c) 2026 Anir El Haddaj (ComicalSoftwares)'
         )
         about.present(self.props.active_window)
 
@@ -101,48 +68,21 @@ SOFTWARE.'''
         month = f"{today.month:02d}"
         day = f"{today.day:02d}"
         url = f"https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/{month}/{day}"
-        req = urllib.request.Request(url, headers={'User-Agent': 'FuntasticApp/1.0 (GNOME Desktop Application)'})
+        req = urllib.request.Request(url, headers={'User-Agent': 'FuntasticApp/1.0'})
         try:
             with urllib.request.urlopen(req, timeout=5) as response:
                 data = json.loads(response.read().decode('utf-8'))
                 events = data.get('events', [])
-
-                bad_keywords = [ # I don't want tragic facts
-                    'kill', 'dead', 'death', 'shot', 'shooting', 'murder',
-                    'war', 'attack', 'crash', 'died', 'assassination', 'executed',
-                    'battle', 'bomb', 'fatal', 'disaster', 'accident'
-                ]
-
-                config = load_config()
-                raw_interests = config.get("interests", "")
-                user_interests = [i.strip().lower() for i in raw_interests.split(",") if i.strip()]
-
-                for fact_item in events:
-                    text = fact_item.get('text', '')
-                    text_lower = text.lower()
-
-                    if any(word in text_lower for word in bad_keywords):
-                        continue
-
-                    year = fact_item.get('year')
-                    formatted_text = f"In {year}, {text}" if (year and not text.startswith(str(year))) else text
-
-                    if user_interests:
-                        if any(interest in text_lower for interest in user_interests):
-                            return formatted_text
-                    else:
-                        return formatted_text
+                bad_keywords = ['kill', 'dead', 'death', 'shot', 'shooting', 'murder', 'war', 'attack', 'crash', 'died', 'assassination', 'executed', 'battle', 'bomb', 'fatal', 'disaster', 'accident']
 
                 for fact_item in events:
                     text = fact_item.get('text', '')
                     if not any(word in text.lower() for word in bad_keywords):
                         year = fact_item.get('year')
                         return f"In {year}, {text}" if (year and not text.startswith(str(year))) else text
-
-        except (urllib.error.URLError, json.JSONDecodeError, TimeoutError):
+        except Exception:
             pass
-
-        return "Nothing. Because Wikipedia's servers are down for the moment."
+        return "Wikipedia's servers are down."
 
     def get_daily_fact(self):
         cache_file = self.get_cache_path()
@@ -162,10 +102,8 @@ SOFTWARE.'''
         if not fact_text:
             fact_text = self.fetch_wikipedia_fact()
             cache_data[today_str] = fact_text
-
             keys_to_keep = {str(date.today() - timedelta(days=i)) for i in range(7)}
             pruned_cache = {k: v for k, v in cache_data.items() if k in keys_to_keep}
-
             try:
                 with open(cache_file, 'w', encoding='utf-8') as f:
                     json.dump(pruned_cache, f, ensure_ascii=False, indent=2)
