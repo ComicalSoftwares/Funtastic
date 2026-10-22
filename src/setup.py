@@ -46,3 +46,8 @@ class SetupWindow(Adw.Window):
         config = load_config()
         config["startup"] = self.startup_row.get_active()
         save_config(config)
+
+        if self.on_complete_callback:
+            self.on_complete_callback()
+
+        self.close()

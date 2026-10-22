@@ -76,7 +76,6 @@ class FuntasticPreferencesWindow(Adw.PreferencesWindow):
         save_config(DEFAULT_CONFIG.copy())
         self.config = load_config()
         self.startup_row.set_active(self.config["startup"])
-        self.mode_row.set_selected(0)
         self.weekly_row.set_active(self.config["weekly_download"])
         button.set_label("Reset Done!")
         button.set_sensitive(False)
