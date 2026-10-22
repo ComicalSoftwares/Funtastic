@@ -33,9 +33,7 @@ class FuntasticApplication(Adw.Application):
 
             from .config import load_config
             config = load_config()
-
-            # Check if setup has been completed in config.json
-            if not config.get("setup_completed", False):
+            if config.get("setup_completed", False):
                 print("[Funtastic Debug] Triggering Setup Window...")
                 from .setup import SetupWindow
                 setup_dialog = SetupWindow(
