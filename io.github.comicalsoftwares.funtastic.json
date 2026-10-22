@@ -9,10 +9,7 @@
         "--share=ipc",
         "--socket=fallback-x11",
         "--device=dri",
-        "--socket=wayland",
-        "--filesystem=xdg-config/funtastic:create",
-	"--filesystem=xdg-data/funtastic:create",
-	"--filesystem=xdg-config/autostart:create"
+        "--socket=wayland"
     ],
     "cleanup" : [
         "/include",
