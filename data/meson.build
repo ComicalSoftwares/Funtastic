@@ -36,7 +36,10 @@ install_data(
   'icons' / 'hicolor' / 'scalable' / 'apps' / 'io.github.comicalsoftwares.funtastic.svg',
   install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps'
 )
-
+install_data(
+  'io.github.comicalsoftwares.funtastic.gschema.xml',
+  install_dir: get_option('datadir') / 'glib-2.0/schemas'
+)
 compile_schemas = find_program('glib-compile-schemas', required: false, disabler: true)
 test('Validate schema file',
      compile_schemas,

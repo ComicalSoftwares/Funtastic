@@ -2,10 +2,10 @@
 <component type="desktop-application">
   <id>io.github.comicalsoftwares.funtastic</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>MIT-license</project_license>
+  <project_license>MIT</project_license>
 
   <name>Funtastic</name>
-  <summary>A clean and simple Adwaita-style fun facts application.</summary>
+  <summary>A clean and simple Adwaita-style fun facts application</summary>
   <description>
     <p>
       Funtastic is a GTK 4 and Libadwaita desktop application for GNOME that brings you interesting and fantastic fun facts every single day.
@@ -23,7 +23,7 @@
   <url type="homepage">https://github.com/ComicalSoftwares/funtastic</url>
   <!-- Recommended: It is highly recommended for open-source projects to display the source code repository -->
   <url type="vcs-browser">https://github.com/ComicalSoftwares/funtastic</url>
-  <!-- Should point to the software's bug tracking system, for users to report new bugs -->art
+  <!-- Should point to the software's bug tracking system, for users to report new bugs -->
   <url type="bugtracker">https://github.com/ComicalSoftwares/funtastic/issues</url>
 
   <!-- Disabled the next lines because for the moment I do not have the corresponding resources for them -->
@@ -59,20 +59,20 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/user-attachments/assets/2d35e77a-e4a9-4cde-87fe-4ae3520dac10</image>
+      <image>https://github.com/ComicalSoftwares/Funtastic/blob/main/screenshots/LightMenu.png</image>
       <caption>Light version of the main screen</caption>
     </screenshot>
     <screenshot>
-      <image>https://github.com/user-attachments/assets/d5e76ccc-c5d4-46b2-b3e4-6e9efd10d7eb</image>
+      <image>https://github.com/ComicalSoftwares/Funtastic/blob/main/screenshots/DarkMenu.png</image>
       <caption>Dark version of the main screen</caption>
     </screenshot>
 
     <screenshot>
-      <image>https://github.com/user-attachments/assets/d26595ff-2ac1-405f-a022-51bf66d66831</image>
+      <image>https://github.com/ComicalSoftwares/Funtastic/blob/main/screenshots/LightSettings.png</image>
       <caption>Light version of preferences menu</caption>
     </screenshot>
     <screenshot>
-      <image>https://github.com/user-attachments/assets/2a5ac6f5-ed03-482d-9f06-bdd58788f5a5</image>
+      <image>https://github.com/ComicalSoftwares/Funtastic/blob/main/screenshots/DarkSettings.png</image>
       <caption>Dark version of preferences menu</caption>
     </screenshot>
   </screenshots>

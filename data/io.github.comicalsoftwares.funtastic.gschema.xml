@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="funtastic">
-	<schema id="io.github.comicalsoftwares.funtastic" path="/io/github/comicalsoftwares/funtastic/">
-	</schema>
+  <schema id="io.github.comicalsoftwares.funtastic" path="/io/github/comicalsoftwares/funtastic/">
+    <key name="autostart" type="b">
+      <default>false</default>
+      <summary>Autostart on login</summary>
+      <description>Whether the application should launch automatically upon logging into the desktop session.</description>
+    </key>
+  </schema>
 </schemalist>
