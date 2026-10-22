@@ -82,9 +82,9 @@
       <description translate="no">
         <p>First ever release of Funtastic !</p>
         <ul>
-          <li>- Ability to show fun facts every day from Wikipedia.</li>
-          <li>- Ability to download and cache future facts that will be used through the week.</li>
-          <li>- Ability to start the app on user login.</li>
+          <li>Ability to show fun facts every day from Wikipedia.</li>
+          <li>Ability to download and cache future facts that will be used through the week.</li>
+          <li>Ability to start the app on user login.</li>
         </ul>
       </description>
     </release>
