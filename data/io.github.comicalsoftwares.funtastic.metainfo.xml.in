@@ -59,20 +59,20 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/ComicalSoftwares/Funtastic/raw/main/screenshots/LightMenu.png</image>
+      <image>https://raw.githubusercontent.com/ComicalSoftwares/Funtastic/main/screenshots/LightMenu.png</image>
       <caption>Light version of the main screen</caption>
     </screenshot>
     <screenshot>
-      <image>https://github.com/ComicalSoftwares/Funtastic/raw/main/screenshots/DarkMenu.png</image>
+      <image>https://raw.githubusercontent.com/ComicalSoftwares/Funtastic/main/screenshots/DarkMenu.png</image>
       <caption>Dark version of the main screen</caption>
     </screenshot>
 
     <screenshot>
-      <image>https://github.com/ComicalSoftwares/Funtastic/raw/main/screenshots/LightSettings.png</image>
+      <image>https://raw.githubusercontent.com/ComicalSoftwares/Funtastic/main/screenshots/LightSettings.png</image>
       <caption>Light version of preferences menu</caption>
     </screenshot>
     <screenshot>
-      <image>https://github.com/ComicalSoftwares/Funtastic/raw/main/screenshots/DarkSettings.png</image>
+      <image>https://raw.githubusercontent.com/ComicalSoftwares/Funtastic/main/screenshots/DarkSettings.png</image>
       <caption>Dark version of preferences menu</caption>
     </screenshot>
   </screenshots>
