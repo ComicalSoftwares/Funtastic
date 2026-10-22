@@ -31,7 +31,7 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/ComicalSoftwares/Funtastic.git",
-                    "branch" : "main"
+                    "commit" : "0682e869c55e4556eb10b6e6b997864817558554"
                 }
             ]
         }
