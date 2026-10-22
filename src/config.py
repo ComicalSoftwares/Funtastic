@@ -8,6 +8,7 @@ AUTOSTART_FILE = os.path.join(AUTOSTART_DIR, 'io.github.comicalsoftwares.funtast
 SETUP_FLAG = os.path.join(os.path.expanduser('~'), '.local', 'share', 'funtastic', '.setup_done')
 
 DEFAULT_CONFIG = {
+    "setup_completed": False,
     "startup": False,
     "weekly_download": True
 }

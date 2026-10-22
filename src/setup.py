@@ -45,6 +45,7 @@ class SetupWindow(Adw.Window):
     def on_start_clicked(self, button):
         config = load_config()
         config["startup"] = self.startup_row.get_active()
+        config["setup_completed"] = True
         save_config(config)
 
         if self.on_complete_callback:

@@ -31,20 +31,11 @@ class FuntasticApplication(Adw.Application):
             fact = self.get_daily_fact()
             win = FuntasticWindow(application=self, initial_fact=fact)
 
-            setup_flag = os.path.join(
-                os.path.expanduser('~'), '.local', 'share', 'funtastic', '.setup_done'
-            )
+            from .config import load_config
+            config = load_config()
 
-            from .config import CONFIG_FILE
-
-            # Print debug info to terminal to check if the Setup will run or not.
-            print(f"[Funtastic Debug] Config Path: {CONFIG_FILE}")
-            print(f"[Funtastic Debug] Config Exists? {os.path.exists(CONFIG_FILE)}")
-            print(f"[Funtastic Debug] Setup Flag Path: {setup_flag}")
-            print(f"[Funtastic Debug] Setup Flag Exists? {os.path.exists(setup_flag)}")
-
-            # In case there's no setup config/flag.. the setup assumes that this is a fresh install.
-            if not os.path.exists(setup_flag) and not os.path.exists(CONFIG_FILE):
+            # Check if setup has been completed in config.json
+            if not config.get("setup_completed", False):
                 print("[Funtastic Debug] Triggering Setup Window...")
                 from .setup import SetupWindow
                 setup_dialog = SetupWindow(
@@ -55,7 +46,7 @@ class FuntasticApplication(Adw.Application):
                 setup_dialog.present()
                 return
             else:
-                print("[Funtastic Debug] Setup skipped (Config found).")
+                print("[Funtastic Debug] Setup skipped (Already completed).")
                 win.present()
 
     def on_about_action(self, *args):
