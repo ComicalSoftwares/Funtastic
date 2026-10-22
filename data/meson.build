@@ -33,10 +33,6 @@ foreach size : icon_sizes
   )
 endforeach
 install_data(
-  'icons' / 'hicolor' / 'scalable' / 'apps' / 'io.github.comicalsoftwares.funtastic.svg',
-  install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps'
-)
-install_data(
   'io.github.comicalsoftwares.funtastic.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0/schemas'
 )
