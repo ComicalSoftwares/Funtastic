@@ -1,4 +1,4 @@
-from gi.repository import Adw, Gtk, GLib
+from gi.repository import Adw, Gtk, GLib, Gio
 import json
 import os
 
@@ -21,26 +21,46 @@ def load_config():
             pass
     return DEFAULT_CONFIG.copy()
 
+def set_autostart(enable: bool):
+    """Safely requests background autostart via the XDG Desktop Portal."""
+    def on_proxy_ready(source, result):
+        try:
+            proxy = Gio.DBusProxy.new_finish(result)
+            options = {
+                'reason': GLib.Variant('s', 'Show daily fun facts on login'),
+                'autostart': GLib.Variant('b', enable),
+                'commandline': GLib.Variant('as', ['flatpak', 'run', 'io.github.comicalsoftwares.funtastic'])
+            }
+            proxy.call(
+                'RequestBackground',
+                GLib.Variant('(sa{sv})', ('', options)),
+                Gio.DBusCallFlags.NONE,
+                -1,
+                None,
+                None,
+                None
+            )
+        except Exception as e:
+            print(f"Autostart portal error: {e}")
+
+    Gio.DBusProxy.new_for_bus(
+        Gio.BusType.SESSION,
+        Gio.DBusProxyFlags.NONE,
+        None,
+        'org.freedesktop.portal.Desktop',
+        '/org/freedesktop/portal/desktop',
+        'org.freedesktop.portal.Background',
+        None,
+        on_proxy_ready
+    )
+
 def save_config(config):
     os.makedirs(CONFIG_DIR, exist_ok=True)
     with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
         json.dump(config, f, indent=2)
 
-    os.makedirs(AUTOSTART_DIR, exist_ok=True)
-    if config.get("startup", False):
-        desktop_entry = """[Desktop Entry]
-Type=Application
-Name=Funtastic !
-Exec=flatpak run io.github.comicalsoftwares.funtastic
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-"""
-        with open(AUTOSTART_FILE, 'w', encoding='utf-8') as f:
-            f.write(desktop_entry)
-    else:
-        if os.path.exists(AUTOSTART_FILE):
-            os.remove(AUTOSTART_FILE)
+    # Trigger the system portal to handle autostart safely
+    set_autostart(config.get("startup", False))
 
 class FuntasticPreferencesWindow(Adw.PreferencesWindow):
     __gtype_name__ = 'FuntasticPreferencesWindow'
