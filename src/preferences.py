@@ -22,7 +22,6 @@ def load_config():
     return DEFAULT_CONFIG.copy()
 
 def set_autostart(enable: bool):
-    """Safely requests background autostart via the XDG Desktop Portal."""
     def on_proxy_ready(source, result):
         try:
             proxy = Gio.DBusProxy.new_finish(result)
@@ -41,7 +40,7 @@ def set_autostart(enable: bool):
                 None
             )
         except Exception as e:
-            print(f"Autostart portal error: {e}")
+            print(f"[E] Autostart portal error: {e}")
 
     Gio.DBusProxy.new_for_bus(
         Gio.BusType.SESSION,
@@ -59,7 +58,6 @@ def save_config(config):
     with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
         json.dump(config, f, indent=2)
 
-    # Trigger the system portal to handle autostart safely
     set_autostart(config.get("startup", False))
 
 class FuntasticPreferencesWindow(Adw.PreferencesWindow):
