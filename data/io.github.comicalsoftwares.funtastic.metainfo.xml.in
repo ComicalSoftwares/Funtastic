@@ -8,12 +8,12 @@
   <summary>A clean and simple Adwaita-style fun facts application</summary>
   <description>
     <p>
-      Funtastic is a GTK 4 and Libadwaita desktop application for GNOME that brings you interesting and fantastic fun facts every single day.
+        Funtastic is a GTK 4 and Libadwaita desktop application for GNOME that brings you interesting and fantastic fun facts every single day.
     </p>
     <p>
-      You can have it start automatically on login so you can get new facts once you start your computer to help have a healthy and literal start for the day.
+        Configure it to run on system startup so you can discover new facts whenever you log in.
     </p>
-  </description>
+</description>
 
   <developer id="io.github.comicalsoftwares">
     <name>Anir El Haddaj</name>
