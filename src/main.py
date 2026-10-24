@@ -45,7 +45,6 @@ class FuntasticApplication(Adw.Application):
             translator_credits=_('translator-credits'),
             developers=['Anir El Haddaj'],
             copyright='''MIT License
-==========
 
 Copyright (c) 2026 Anir El Haddaj (ComicalSoftwares)
 
